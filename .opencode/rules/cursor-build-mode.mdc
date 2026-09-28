@@ -1,0 +1,312 @@
+---
+description: Use when Cursor is in Build Mode after a plan is approved. Follow the approved plan as the blueprint, allow necessary implementation adjustments, and clearly summarize any changes from the plan.
+globs:
+alwaysApply: true
+---
+
+# Build Mode Controlled Implementation Rules
+
+These rules control how Cursor should behave when implementing code after a plan is approved.
+
+Build Mode should treat the approved plan as the blueprint.
+
+The plan guides the implementation, but small practical changes are allowed when the real code requires them.
+
+The important rule is this:
+
+Do not silently change the plan.
+
+If the implementation differs from the approved plan, clearly explain the difference in the final summary.
+
+## Main Goal
+
+Build Mode should:
+
+- Follow the approved plan
+- Keep changes scoped to the task
+- Avoid unrelated refactors
+- Use the existing project structure
+- Apply relevant project rules, skills, and sub-agents
+- Make practical adjustments only when needed
+- Clearly summarize what was changed
+- Clearly point out any differences from the approved plan
+
+The implementation should be direct, controlled, professional, and neurodivergent-friendly.
+
+## Approved Plan Rule
+
+The approved plan is the blueprint.
+
+Follow it as closely as possible.
+
+Do not ignore the plan.
+
+Do not replace the plan with a different approach unless the code makes the original plan unsafe, incorrect, or impossible.
+
+## Practical Adjustment Rule
+
+Small implementation adjustments are allowed when needed.
+
+Allowed adjustments include:
+
+- Using the actual existing file names
+- Following the existing project folder structure
+- Matching the current coding style
+- Reusing existing utilities or helpers
+- Adjusting the order of steps to fit the codebase
+- Fixing small issues found during implementation
+- Updating a related file that is clearly required for the task
+
+These adjustments do not need approval first if they are small, safe, and still support the approved plan.
+
+But they must be mentioned in the final summary.
+
+## Major Change Approval Rule
+
+If implementation requires a major change from the approved plan, pause before making that major change.
+
+Do not modify files for the major change yet.
+
+Ask me for approval first.
+
+A major change means:
+
+- Changing the main approach
+- Adding a new library
+- Changing architecture
+- Touching unrelated features
+- Changing database structure
+- Changing API response shape
+- Changing authentication or permission logic
+- Creating a large refactor
+- Removing existing behavior
+- Updating many files not mentioned in the plan
+
+Use this format when asking:
+
+```md
+Plan change approval needed:
+<short explanation>
+
+What changed:
+<what was discovered>
+
+Why the plan needs adjustment:
+<reason>
+
+Affected file or logic:
+<file or area>
+
+Recommended adjustment:
+<smallest safe change>
+```
+
+Do not continue with the major change until I approve it.
+
+## Scope Control Rule
+
+Only change files needed for the approved task.
+
+Before editing a file, make sure it is related to the approved plan.
+
+Avoid touching:
+
+- Unrelated components
+- Unrelated services
+- Unrelated tests
+- Unrelated config files
+- Formatting-only changes in unrelated files
+- Large cleanup work not required by the task
+
+If an unrelated issue is found, mention it separately as optional.
+
+Do not fix it unless I ask.
+
+## Implementation Style Rule
+
+Use the existing project style.
+
+Follow:
+
+- Existing folder structure
+- Existing naming conventions
+- Existing patterns
+- Existing validation style
+- Existing error handling style
+- Existing testing style
+
+Do not introduce a new pattern unless the approved plan requires it.
+
+If the project has relevant rules, skills, or sub-agents, use them.
+
+## Skills and Sub-Agent Usage Rule
+
+Before implementing, use the relevant project rules, skills, and sub-agents that match the task.
+
+Examples:
+
+- React task: use React-related rules, skills, and agents
+- Laravel task: use Laravel-related rules, skills, and agents
+- Python/FastAPI task: use Python and FastAPI rules, skills, and agents
+- Supabase/Postgres task: use Supabase and database rules, skills, and agents
+
+Do not invent a new approach if a skill already defines the preferred approach.
+
+If rules or skills conflict, ask for clarification.
+
+## Neurodivergent-Friendly Build Behavior
+
+Keep implementation communication easy to process.
+
+Use:
+
+- Short updates
+- Clear headings
+- Direct wording
+- One idea per bullet
+- Concrete file names
+- Clear distinction between planned work and extra changes
+- A predictable final summary
+
+Avoid:
+
+- Long paragraphs
+- Vague summaries
+- Overly broad explanations
+- Hidden assumptions
+- Mixing unrelated topics
+- Too many optional suggestions
+
+## Final Summary Rule
+
+At the end of Build Mode, provide a clear final summary.
+
+Use this exact format:
+
+```md
+Build summary:
+- <short summary of what was implemented>
+
+Files changed:
+- `path/to/file`: <what changed>
+- `path/to/file`: <what changed>
+
+Plan differences:
+- <state any differences from the approved plan>
+```
+
+If there were no differences from the plan, say:
+
+```md
+Plan differences:
+- None. The implementation followed the approved plan.
+```
+
+If there were small practical adjustments, say:
+
+```md
+Plan differences:
+- Adjusted <specific detail> because <reason>.
+- Used existing <utility/pattern/file> instead of creating a new one.
+```
+
+## Validation Summary Rule
+
+If validation or testing was done, include it clearly.
+
+Use this format:
+
+```md
+Validation:
+- <what was checked>
+- <what passed>
+```
+
+If validation was not done, say it clearly:
+
+```md
+Validation:
+- Not run.
+```
+
+Do not pretend that tests were run if they were not run.
+
+## Optional Follow-Up Rule
+
+If optional improvements are found, separate them from the completed task.
+
+Use this format:
+
+```md
+Optional follow-up:
+- <optional item>
+```
+
+Do not include more than 3 optional follow-up items.
+
+Do not make optional items sound required.
+
+## If Unsure During Build
+
+If unsure about something that affects the implementation, ask before continuing.
+
+Use this format:
+
+```md
+Clarification needed:
+<question>
+
+Why I am asking:
+<short reason>
+
+Affected area:
+<file or logic>
+```
+
+If the uncertainty is minor and does not affect the final behavior, make a safe assumption and state it in the final summary.
+
+## Bad Build Behavior
+
+Avoid this behavior:
+
+- Silently changing the approved plan
+- Adding unrelated improvements
+- Refactoring unrelated code
+- Making broad architecture changes
+- Adding a library without approval
+- Giving a vague summary like "updated files"
+- Hiding skipped validation
+- Explaining too much without saying what changed
+
+## Good Build Behavior
+
+Prefer this behavior:
+
+```md
+Build summary:
+- Added validation to the user creation flow.
+
+Files changed:
+- `app/users/routes.py`: Added request validation before creating the user.
+- `app/users/schemas.py`: Added the required input schema.
+
+Plan differences:
+- Used the existing validation schema file instead of creating a new one because the project already had a pattern for this.
+
+Validation:
+- Not run.
+```
+
+## Final Rule
+
+Build Mode should implement the approved plan using the smallest safe change.
+
+The plan is the blueprint, not a prison.
+
+Small practical changes are allowed.
+
+Major changes need approval.
+
+Any difference from the plan must be clearly pointed out in the final summary.
+
+Keep the final summary clear, structured, professional, and neurodivergent-friendly.

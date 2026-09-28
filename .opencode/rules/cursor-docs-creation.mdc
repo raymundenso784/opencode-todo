@@ -1,0 +1,764 @@
+---
+description: Use when the user asks to document a feature, explain an existing feature, or create/update feature documentation in the current project
+alwaysApply: false
+---
+
+# Cursor Feature Documentation Creation Rule
+
+Use this rule when the user asks to:
+
+- document a feature
+- explain how an existing feature works
+- create feature documentation
+- update existing feature documentation
+- prepare a feature so future developers or AI assistants can understand it
+
+This rule must work for:
+
+- frontend-only projects
+- backend-only projects
+- full-stack projects
+- desktop applications
+- mobile applications
+- API services
+- background workers
+- internal tools
+
+Do not assume a specific framework, language, architecture, or project type.
+
+The goal is to create documentation that is useful for:
+
+- non-technical readers
+- future developers
+- future AI assistants
+- neurodivergent users who need clear structure
+- safe future changes
+
+# 1. Identify the Feature Type First
+
+Before documenting the feature, classify it as one of the following:
+
+- **Frontend**
+- **Backend**
+- **Full Stack**
+- **Infrastructure / DevOps**
+- **Background Process**
+- **Desktop / Mobile**
+- **Mixed / Other**
+
+Add the identified type near the top of the documentation.
+
+Example:
+
+```md
+**Feature Type:** Full Stack
+```
+
+Use only the sections that are relevant.
+
+Do not force frontend sections into a backend-only feature.
+
+Do not force backend sections into a frontend-only feature.
+
+For a full-stack feature, document both sides and explain how they connect.
+
+# 2. Project Awareness
+
+Before writing documentation:
+
+1. Identify the current project name from reliable files such as:
+   - `README.md`
+   - `package.json`
+   - `composer.json`
+   - `pyproject.toml`
+   - `go.mod`
+   - project configuration files
+2. Identify the language, framework, and project structure.
+3. Check whether the project already has a documentation folder or documentation convention.
+4. Follow the existing convention when it is clear and useful.
+5. Do not copy assumptions from another project.
+
+If the project name or purpose is unclear, use neutral wording such as:
+
+- `the application`
+- `the system`
+- `the project`
+
+Do not guess.
+
+# 3. Documentation Location
+
+By default, create or update feature documentation under:
+
+`docs/features/[feature-name].md`
+
+Use a clear kebab-case filename.
+
+Examples:
+
+- `docs/features/login-flow.md`
+- `docs/features/screenshot-capture.md`
+- `docs/features/offline-mode.md`
+- `docs/features/order-processing.md`
+- `docs/features/project-assignment-display.md`
+
+If the project already uses an equivalent location, follow the existing structure.
+
+Examples:
+
+- `documentation/features/`
+- `docs/modules/`
+- `docs/system/features/`
+
+Do not create a duplicate documentation system.
+
+# 4. Documentation Style
+
+Keep documentation:
+
+- simple
+- direct
+- short where possible
+- easy to scan
+- non-technical first
+- useful for future AI context
+- specific to the current project
+- consistent across features
+
+Use plain English before technical terms.
+
+Bad:
+
+> This feature hydrates persisted employee state through an asynchronous IPC bridge.
+
+Good:
+
+> This feature loads the user's saved session so the application knows who is logged in. It uses IPC, which is how the visible Electron app communicates with its background process.
+
+Do not explain code line by line.
+
+# 5. Required Feature Documentation Format
+
+Every feature document must follow this structure.
+
+Sections marked as conditional should only be included when relevant.
+
+```md
+# Feature: [Feature Name]
+
+**Feature Type:** [Frontend | Backend | Full Stack | Infrastructure / DevOps | Background Process | Desktop / Mobile | Mixed / Other]
+
+## 1. What This Feature Does
+
+Explain the feature in simple terms.
+
+Keep this understandable for a non-technical person.
+
+## 2. Scope
+
+Explain what this feature is responsible for.
+
+Use short bullets.
+
+Example:
+
+- Allows the user to log in.
+- Saves the user session.
+- Loads the user's assigned projects.
+- Rejects access when the session is invalid.
+
+## 3. Limitations
+
+Explain what the feature does not do.
+
+Include important technical or business limitations.
+
+Example:
+
+- Does not create new user accounts.
+- Does not manage billing.
+- Requires internet access during the first login.
+- Depends on the authentication API being available.
+
+## 4. User or System Flow
+
+Explain the normal flow step by step.
+
+For a frontend feature, describe what the user sees and does.
+
+For a backend feature, describe how the request or process moves through the system.
+
+For a full-stack feature, describe both sides in one connected flow.
+
+Example:
+
+1. User submits the login form.
+2. Frontend validates the required fields.
+3. Frontend sends the request to the authentication API.
+4. Backend validates the credentials.
+5. Backend returns the session.
+6. Frontend stores the session and shows the dashboard.
+
+Include important alternate flows briefly:
+
+- error flow
+- empty state
+- permission denied
+- offline behavior
+- expired session
+- retry behavior
+
+## 5. Frontend Components Involved
+
+Include this section only when the feature has frontend behavior.
+
+| Component | Purpose |
+|---|---|
+| `[ComponentName]` | Short explanation |
+
+List only important components.
+
+Possible frontend items:
+
+- pages
+- screens
+- forms
+- dialogs
+- state stores
+- hooks
+- composables
+- view models
+- desktop windows
+- mobile screens
+
+## 6. Backend Components Involved
+
+Include this section only when the feature has backend behavior.
+
+| Component / Module | Purpose |
+|---|---|
+| `[ControllerName]` | Receives the request |
+| `[ServiceName]` | Handles the business rules |
+| `[RepositoryName]` | Reads or saves data |
+| `[JobName]` | Handles background processing |
+
+Possible backend items:
+
+- routes
+- controllers
+- services
+- actions
+- use cases
+- repositories
+- models
+- policies
+- middleware
+- events
+- listeners
+- jobs
+- commands
+- scheduled tasks
+- API clients
+
+## 7. Files Involved
+
+List important files only.
+
+Do not list every imported file.
+
+| Layer | File | Purpose |
+|---|---|---|
+| Frontend | `path/to/file.tsx` | Short explanation |
+| Backend | `path/to/file.php` | Short explanation |
+| Shared | `path/to/file.ts` | Short explanation |
+
+Use only the layers that apply.
+
+## 8. Important Functions, Classes, or Handlers
+
+List only important implementation entry points.
+
+| Type | Name | File | Purpose |
+|---|---|---|---|
+| Function | `functionName()` | `path/to/file.ts` | Short explanation |
+| Class | `ServiceName` | `path/to/file.php` | Short explanation |
+| Handler | `handleRequest()` | `path/to/file.ts` | Short explanation |
+
+Do not explain code line by line.
+
+## 9. Frontend State and UI Behavior
+
+Include this section only when relevant.
+
+Explain:
+
+- state used
+- loading state
+- empty state
+- error state
+- success state
+- visibility rules
+- permission-based UI behavior
+- local persistence
+- navigation or redirects
+
+| State / Behavior | Purpose |
+|---|---|
+| `isLoading` | Shows progress while waiting for the request |
+
+## 10. Backend Data and Processing
+
+Include this section only when relevant.
+
+Explain:
+
+- database tables
+- models
+- validation
+- permissions
+- transactions
+- queues
+- caching
+- files
+- external APIs
+- scheduled processing
+
+| Data / Process | Purpose |
+|---|---|
+| `users` table | Stores account information |
+| `ProcessUploadJob` | Uploads files in the background |
+
+Do not include secret values.
+
+## 11. Frontend and Backend Connection
+
+Include this section for full-stack features.
+
+Explain how both sides communicate.
+
+| Connection | Purpose |
+|---|---|
+| `POST /api/login` | Sends login details to the backend |
+| `LoginResponse` | Defines the response expected by the frontend |
+
+Include:
+
+- API endpoint
+- request structure
+- response structure
+- shared types or contracts
+- important status codes
+- error handling
+- retry behavior
+- authentication requirements
+
+Keep the explanation short.
+
+## 12. Dependencies
+
+List important dependencies.
+
+Dependencies may include:
+
+- another feature
+- API
+- database table
+- background worker
+- queue
+- cache
+- external provider
+- operating system capability
+- framework package
+
+| Dependency | Why It Is Needed |
+|---|---|
+| `[Dependency]` | Short explanation |
+
+Skip only when there are no meaningful dependencies.
+
+## 13. Rules and Expected Behavior
+
+Explain behavior that should not be broken.
+
+Use clear bullets.
+
+Example:
+
+- The frontend must not show restricted data.
+- The backend must still enforce permission checks even if the frontend hides the action.
+- The application should show a user-friendly error message.
+- Duplicate requests must not create duplicate records.
+- Expired sessions must be rejected.
+- Existing API response contracts must remain compatible unless intentionally changed.
+
+## 14. Safe Change Notes
+
+Explain how to safely change the feature.
+
+Use short bullets.
+
+Example:
+
+- Check both frontend and backend when changing the API response.
+- Update shared types when the request or response changes.
+- Test permission checks on the backend.
+- Test loading, empty, error, and success states on the frontend.
+- Check whether background jobs depend on the changed data.
+- Avoid changing shared functions without checking all callers.
+- Update automated tests when expected behavior changes.
+
+## 15. Testing Checklist
+
+Include only checks relevant to the feature.
+
+### Frontend
+
+- [ ] Normal user flow works.
+- [ ] Loading state works.
+- [ ] Empty state works.
+- [ ] Error state works.
+- [ ] User-friendly messages appear.
+- [ ] Permission-based UI behavior works.
+- [ ] Navigation or redirects work.
+- [ ] Existing UI behavior is not broken.
+
+### Backend
+
+- [ ] API returns the expected response.
+- [ ] Validation errors are handled correctly.
+- [ ] Unauthorized requests are rejected.
+- [ ] Permission rules are enforced.
+- [ ] Database changes are correct.
+- [ ] Transactions roll back when needed.
+- [ ] Duplicate requests do not create duplicate data.
+- [ ] Background jobs run correctly.
+- [ ] Existing integrations are not broken.
+
+### Full Stack
+
+- [ ] Frontend request matches the backend contract.
+- [ ] Backend response matches frontend expectations.
+- [ ] Error responses are handled correctly.
+- [ ] Authentication works across both layers.
+- [ ] End-to-end flow works.
+- [ ] Related automated tests pass.
+- [ ] Important manual checks were completed.
+
+Remove checklist groups that do not apply.
+
+## 16. Needs Confirmation
+
+List anything that could not be confirmed from the codebase.
+
+Example:
+
+- Needs confirmation: whether this feature must support offline use.
+- Needs confirmation: whether administrators can bypass this restriction.
+- Needs confirmation: whether this endpoint is still used by the mobile app.
+
+If everything was confirmed, write:
+
+`No unresolved items found during documentation.`
+
+## 17. Change History
+
+| Date | Change | Reason |
+|---|---|---|
+| YYYY-MM-DD | Initial documentation | Created feature documentation |
+```
+
+# 6. Required Investigation Before Writing
+
+Before creating or updating documentation:
+
+1. Search for:
+   - feature name
+   - related UI text
+   - related routes
+   - related endpoints
+   - related components
+   - related functions
+   - related classes
+   - related database tables
+   - related API calls
+   - related jobs or scheduled tasks
+   - related tests
+2. Identify whether the feature is frontend, backend, or full stack.
+3. Identify the main user or system flow.
+4. Identify alternate and failure flows.
+5. Identify the important files.
+6. Identify the important functions, classes, handlers, jobs, or commands.
+7. Identify scope.
+8. Identify limitations.
+9. Identify dependencies.
+10. Identify behavior that should not be broken.
+11. Check existing documentation before creating a new file.
+
+Do not guess.
+
+If something cannot be confirmed, write:
+
+`Needs confirmation`
+
+Do not present assumptions as facts.
+
+# 7. Full-Stack Investigation Rules
+
+For full-stack features, always check both sides.
+
+## Frontend
+
+Look for:
+
+- page or screen
+- form or button
+- state management
+- API client
+- loading and error handling
+- response mapping
+- visibility and permission rules
+
+## Backend
+
+Look for:
+
+- route or endpoint
+- controller or handler
+- validation
+- service or business logic
+- database access
+- permissions
+- transactions
+- background jobs
+- external API calls
+
+## Connection
+
+Confirm:
+
+- endpoint path
+- HTTP method
+- request fields
+- response fields
+- error format
+- authentication
+- shared types
+- status codes
+
+Do not document only one side if the feature depends on both.
+
+# 8. Updating Existing Documentation
+
+If a feature document already exists:
+
+1. Read it first.
+2. Compare it with the current code.
+3. Keep correct information.
+4. Update outdated:
+   - paths
+   - components
+   - functions
+   - classes
+   - endpoints
+   - flows
+   - limitations
+   - dependencies
+   - testing steps
+5. Remove information that is no longer true.
+6. Preserve useful change history.
+7. Add a new change-history entry for meaningful updates.
+8. Avoid creating a duplicate document.
+
+# 9. Summarizing Code
+
+Do not explain code line by line.
+
+Summarize only:
+
+- what the file or module does
+- why it matters
+- which function, class, handler, or job is important
+- what depends on it
+- what should be handled carefully
+
+The documentation should help a future person or AI understand the feature without reading every implementation detail first.
+
+# 10. Sensitive Information Rule
+
+Do not include secrets or private production information.
+
+Never include:
+
+- passwords
+- API keys
+- access tokens
+- refresh tokens
+- service role keys
+- signing secrets
+- production credentials
+- private customer data
+- private employee data
+- security bypass instructions
+- real secret values from environment files
+
+Environment variable names may be documented when useful.
+
+Good:
+
+`SUPABASE_URL` is used to connect the application to Supabase.
+
+Bad:
+
+`SUPABASE_URL=https://real-production-project.example`
+
+If sensitive logic is involved, document expected behavior and safe handling only.
+
+# 11. Required Documentation Index
+
+Every project using this rule should have a documentation index rule.
+
+Preferred file:
+
+`.cursor/rules/project-documentation.mdc`
+
+This file is the map Cursor uses to find existing feature documentation before changing code.
+
+## Before Creating the Index
+
+Search `.cursor/rules/` for an existing documentation index.
+
+Possible names:
+
+- `project-documentation.mdc`
+- `[project-name]-documentation.mdc`
+- `documentation-index.mdc`
+- `feature-documentation-index.mdc`
+
+If a suitable index exists:
+
+1. Update the existing file.
+2. Do not create a competing index.
+3. Preserve existing rules and useful content.
+
+If no documentation index exists, create:
+
+`.cursor/rules/project-documentation.mdc`
+
+Use this format:
+
+```md
+---
+description: Main documentation index and documentation rules for this project
+alwaysApply: true
+---
+
+# Project Documentation Index
+
+This file is the main map for project documentation.
+
+Use the listed documents as a source of truth before changing related features.
+
+## Documentation Location
+
+Feature documentation is stored under:
+
+`docs/features/`
+
+If this project uses a different location, update this path.
+
+## Feature Documentation
+
+| Feature | Type | Documentation File | Purpose |
+|---|---|---|---|
+| [Feature Name] | [Frontend / Backend / Full Stack / Other] | `docs/features/[feature-name].md` | Short purpose |
+
+## Required Behavior
+
+Before changing a documented feature:
+
+1. Identify the affected feature.
+2. Check this documentation index.
+3. Read the related feature document.
+4. Check the current implementation before assuming the document is fully current.
+5. Explain what behavior may be affected.
+6. Make the smallest safe change.
+7. Update the feature document if behavior, files, functions, APIs, dependencies, data, limitations, or testing steps changed.
+
+## When Adding Documentation
+
+When a new feature document is created:
+
+1. Add it to the Feature Documentation table.
+2. Avoid duplicate entries.
+3. Use the same feature name used in the document.
+4. Include the feature type.
+5. Keep the purpose short.
+6. Keep this file as an index, not the full explanation.
+
+## Documentation Safety
+
+Do not include secrets, credentials, private production values, customer data, employee data, or security bypass instructions.
+```
+
+# 12. Required Index Update
+
+After creating a new feature document:
+
+1. Update the project's documentation index.
+2. Add the feature to the feature table.
+3. Include whether it is frontend, backend, full stack, or another type.
+4. Avoid duplicate entries.
+5. Preserve existing content and rules.
+6. Do not overwrite the index blindly.
+7. Keep entries sorted logically or alphabetically.
+8. Confirm that the documented file path exists.
+
+After updating an existing feature document:
+
+1. Check whether the index entry is still correct.
+2. Update the feature name, type, path, or purpose when needed.
+3. Do not add another entry for the same document.
+
+# 13. Future Feature Changes
+
+When implementing or modifying a feature:
+
+1. Check whether documentation already exists.
+2. Read the feature document before changing code.
+3. Check both frontend and backend when the feature is full stack.
+4. Update the document after implementation when any of these changed:
+   - user behavior
+   - system flow
+   - scope
+   - limitations
+   - frontend components
+   - backend components
+   - files
+   - functions
+   - classes
+   - endpoints
+   - request or response contracts
+   - data or storage
+   - dependencies
+   - rules
+   - testing steps
+5. Update the documentation index if the file was added, renamed, moved, or removed.
+
+# 14. Final Response After Documentation
+
+After creating or updating documentation, summarize briefly:
+
+- feature documented
+- feature type
+- documentation file created or updated
+- important frontend files found
+- important backend files found
+- important functions, classes, or modules found
+- documentation index updated
+- unresolved items marked as `Needs confirmation`
+
+Only mention frontend or backend findings when they apply.
+
+Keep the final response short and easy to scan.
+
+Do not paste the entire documentation into the response unless the user asks to see it.

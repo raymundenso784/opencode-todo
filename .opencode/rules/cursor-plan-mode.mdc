@@ -1,0 +1,464 @@
+---
+description: Use when Cursor is in Plan Mode. Create controlled, direct, scoped, professional implementation plans without unnecessary suggestions.
+globs:
+alwaysApply: true
+---
+
+# Plan Mode Controlled Planning Rules
+
+These rules control how Cursor should behave when creating plans.
+
+Plan Mode should create a clear implementation plan.
+
+Plan Mode should not behave like Ask Mode.
+
+Do not give long explanations, unnecessary suggestions, or broad theory unless I ask for them.
+
+## Main Goal
+
+Create plans that are:
+
+- Direct
+- Controlled
+- Easy to understand
+- Professional
+- Practical
+- Scoped to the task
+- Understandable for a neurodivergent person
+
+Use simple and clear language.
+
+Avoid walls of text.
+
+Use predictable sections.
+
+Use one idea per bullet.
+
+## Most Important Rule
+
+Plan only for the task I asked for.
+
+Do not add extra improvements, refactors, optimizations, architecture changes, or unrelated suggestions unless they are required to complete the task safely.
+
+If something is optional, clearly label it as optional and do not mix it with the required plan.
+
+## Current Implementation First Rule
+
+Before giving the concrete plan, explain the current implementation first.
+
+This is required so I can confirm that you understood the existing code before you propose changes.
+
+The current implementation explanation should be short, factual, and based on the actual code.
+
+Do not guess.
+
+If you cannot determine the current implementation from the available files, say that clearly and ask what file or context is needed.
+
+Use this format:
+
+```md
+Current implementation:
+- <what currently exists>
+- <how the current flow works>
+- <important file or logic involved>
+
+Goal check:
+- <what the user wants to achieve>
+- <what part of the current implementation needs to change>
+```
+
+Keep this section short.
+
+Do not turn it into a long explanation.
+
+Only include details that help validate whether the plan hits the goal.
+
+## If You Are Not Sure
+
+Ask me before making assumptions.
+
+Do not guess the requirement if it changes the implementation.
+
+Ask a short clarification question when:
+
+- The requirement is ambiguous
+- Multiple implementation paths are possible
+- The change may affect existing behavior
+- The plan requires touching unrelated files
+- The current code structure is unclear
+- The task may introduce security, data, or performance risks
+
+Use this format:
+
+```md
+Clarification needed:
+<ask the exact question>
+
+Why I am asking:
+<short reason>
+```
+
+Do not continue with a large plan if a key requirement is unclear.
+
+## Required Plan Format
+
+Use this structure when making a plan:
+
+```md
+Current implementation:
+- <what currently exists>
+- <how the current flow works>
+- <important file or logic involved>
+
+Goal check:
+- <what the user wants to achieve>
+- <what part of the current implementation needs to change>
+
+Direct plan:
+<one short paragraph explaining what will be done>
+
+Scope:
+- What will be changed
+- What will not be changed
+
+Files to check:
+- <file or folder>
+- <file or folder>
+
+Steps:
+1. <clear action>
+2. <clear action>
+3. <clear action>
+
+Risk check:
+- <only mention real risks>
+
+Questions before implementation:
+- <only ask if needed>
+```
+
+If the task is simple, keep the plan shorter:
+
+```md
+Current implementation:
+- <short explanation of the existing code or flow>
+
+Direct plan:
+<answer in 2 to 4 sentences>
+
+Steps:
+1. <step>
+2. <step>
+```
+
+## Direct Plan Rules
+
+The first section must explain the current implementation.
+
+The plan should come after the current implementation and goal check.
+
+Do not start with:
+
+- Long background
+- Theory
+- Generic software advice
+- A TLDR
+- Unrelated context
+- Multiple alternative approaches
+- A plan that ignores the existing code
+
+Start with what currently exists, then explain what will be done.
+
+## Explanation Rules
+
+Explain only what is needed to understand the plan.
+
+Do not over-explain.
+
+Do not include a TLDR unless the plan is very long.
+
+If a summary is needed, use:
+
+```md
+Summary:
+<short and clear summary>
+```
+
+Avoid using TLDR as a replacement for a clear plan.
+
+## Scope Control Rules
+
+Stay within the requested task.
+
+Before suggesting extra changes, ask:
+
+- Is this required for the task?
+- Will the task fail without this?
+- Is this a security or data safety issue?
+- Did the user ask for this?
+- Is this required by applicable project structure or ownership rules?
+
+If the answer is no, do not include it in the main plan.
+
+Put optional ideas in a separate section only when useful:
+
+```md
+Optional, not required:
+- <optional improvement>
+```
+
+Do not include more than 3 optional items.
+
+## Rule-Aware Structural Planning
+
+When a task creates, extends, reorganizes, or refactors code:
+
+1. Read the applicable project structure and ownership rules.
+2. Inspect the existing project conventions.
+3. Identify responsibilities introduced or changed by the task.
+4. Include files required by those responsibilities in the main plan.
+5. Clearly mark new files as proposed files.
+6. Explain why each proposed file is required.
+
+Changes required by applicable project rules are part of the requested task.
+
+Do not classify required structural work as:
+
+- An unrelated improvement.
+- Optional cleanup.
+- Unnecessary refactoring.
+- Out of scope merely because it requires a new file.
+
+Scope control still applies:
+
+- Do not include unrelated restructuring.
+- Do not introduce a new architecture unless required.
+- Do not replace established conventions without approval.
+- Do not create files solely to reduce file length.
+- Do not add abstractions without a clear responsibility.
+
+If applicable rules conflict with the established project structure, ask for clarification before planning the conflicting change.
+
+## Structure-Sensitive Plan Content
+
+For structure-sensitive tasks, identify:
+
+- Current responsibilities.
+- Responsibilities being added or changed.
+- Current ownership problems, when applicable.
+- Files that remain responsible for local implementation.
+- Responsibilities requiring separate ownership.
+- Existing files to modify.
+- Proposed new files.
+- Why each proposed file is necessary.
+- Behavior that must remain unchanged.
+
+Keep this wording generic so it works with any language, framework, or architecture.
+
+Do not add technology-specific folder names, frameworks, or examples to this section.
+
+When useful, include these items in the plan using clear bullets under Scope, Files to check, or Steps.
+
+## Avoid Unnecessary Suggestions
+
+Do not suggest these unless directly needed:
+
+- Full refactor
+- New architecture
+- New library
+- New framework
+- Large folder restructuring
+- Extra abstractions
+- Premature optimization
+- Extra tests unrelated to the change
+- Style changes unrelated to the task
+- Security changes unrelated to the task
+
+Required structural work from applicable project rules is not an unnecessary suggestion.
+
+If a suggestion is not needed now, leave it out.
+
+## Neurodivergent-Friendly Planning
+
+Make the plan easy to follow.
+
+Use:
+
+- Clear section titles
+- Short sentences
+- Numbered steps
+- Concrete file names when possible
+- Direct wording
+- One action per step
+- Consistent formatting
+
+Avoid:
+
+- Dense paragraphs
+- Vague wording
+- Too many options
+- Mixed topics in one bullet
+- Long explanations before the actual plan
+- Unclear pronouns like "this", "that", or "it" without context
+
+## Diagram Rules
+
+Use a diagram only when it makes the plan easier to understand.
+
+Use diagrams for:
+
+- Request flow
+- Data flow
+- Module communication
+- Architecture boundaries
+- Complex step sequences
+
+Do not use diagrams for simple tasks.
+
+When using a diagram, prefer Mermaid:
+
+```mermaid
+flowchart TD
+    A[User Action] --> B[Frontend]
+    B --> C[Backend]
+    C --> D[Database]
+```
+
+Keep diagrams small and readable.
+
+## File Change Rules
+
+When planning file changes:
+
+- Mention the files or folders that need to be checked.
+- Mention the files likely to be changed.
+- Do not invent files unless clearly saying they are proposed.
+- Do not touch unrelated files.
+- Do not rewrite working code unless required.
+- Include proposed files required by applicable ownership or structure rules in the main plan.
+- Explain why each proposed file is necessary.
+
+Use this format when useful:
+
+```md
+Likely files to change:
+- `path/to/file`: <what will change>
+- `path/to/other-file`: <what will change>
+
+Proposed files:
+- `path/to/new-file`: <why this file is required>
+```
+
+## Code Planning Rules
+
+In Plan Mode, do not write full code unless I ask for code.
+
+Prefer explaining the implementation steps.
+
+Small pseudocode is allowed only if it makes the plan clearer.
+
+If code is needed later, wait for approval before implementing.
+
+## Testing Plan Rules
+
+Include testing only when useful.
+
+Testing should match the task size.
+
+For simple UI or logic changes, give simple checks.
+
+For risky changes, include proper validation steps.
+
+Use this format:
+
+```md
+Validation:
+1. <how to confirm it works>
+2. <edge case to check>
+```
+
+Do not add excessive testing steps for a small change.
+
+## Risk Rules
+
+Mention risks only when they are real and relevant.
+
+Do not create fear or confusion by listing generic risks.
+
+Good risk examples:
+
+- "This may affect login because the auth middleware is shared."
+- "This may change existing API response shape."
+- "This may break old data if the migration is not backward compatible."
+
+Bad risk examples:
+
+- "There may be bugs."
+- "This could affect the system."
+- "We should be careful."
+
+## Alternatives Rule
+
+Do not list many alternatives unless I ask for options.
+
+If there are multiple valid approaches, recommend one.
+
+Use this format:
+
+```md
+Recommended approach:
+<option>
+
+Why:
+<short reason>
+
+Alternative:
+<only mention if useful>
+```
+
+## Professional Tone
+
+Use a calm, professional, and helpful tone.
+
+Be direct without sounding rude.
+
+Do not sound overly casual.
+
+Do not sound robotic.
+
+## Plan Change Approval Rule
+
+After Build starts, follow the approved plan exactly.
+
+If implementation requires changing the approved plan, do not modify files for that changed part yet.
+
+Stop and ask for approval first.
+
+Explain:
+
+- What changed
+- Why the plan needs adjustment
+- What file or logic is affected
+- The smallest safe adjustment needed
+
+Continue only after I approve the adjustment.
+
+## Final Rule
+
+Plan Mode should produce a controlled implementation plan.
+
+It should answer:
+
+1. What is the current implementation?
+2. What goal is the user trying to achieve?
+3. What will be done?
+4. What files or areas are involved?
+5. What are the steps?
+6. What needs clarification?
+7. What risks matter?
+
+Do not explain around the task.
+
+Do not make unnecessary suggestions.
+
+If unsure, ask first.

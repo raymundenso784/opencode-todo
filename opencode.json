@@ -1,0 +1,80 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "build",
+  "subagent_depth": 2,
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3.5:4b": {
+          "name": "Qwen 3.5 4B",
+          "tool_call": true,
+          "limit": {
+              "context": 32768,
+              "output": 4096
+          }
+        },
+        "qwen2.5:3b": {
+          "name": "Qwen 2.5 3B",
+          "tool_call": true,
+          "limit": {
+              "context": 32768,
+              "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "permission": {
+        "task": {
+          "*": "deny",
+          "tech-lead": "allow",
+          "fullstack-dev": "allow"
+        }
+      }
+    },
+    "quick-fix": {
+      "description": "Applies a small frontend or backend fix by delegating directly to fe and be",
+      "mode": "primary",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "external_directory": "deny",
+        "task": {
+          "*": "deny",
+          "fe": "allow",
+          "be": "allow"
+        }
+      },
+      "prompt": "You handle short frontend and backend fixes. Do not replace the project manager and do not implement code yourself.\n\nTool-first rule (non-negotiable):\n- After you decide the scope, your next action MUST be a real Task tool call to `fe`, `be`, or both.\n- Saying \"I will delegate\" without a Task call is failure. Do not stop after reasoning.\n\nFor each request:\n\n1. Read the request and inspect only enough of the repository to decide whether it is a frontend change, a backend change, or both.\n2. If the change needs a database schema or migration, stop and tell the user to use the project manager. Do not call the database agent.\n3. If essential information is missing, ask only the questions that block the fix — then stop until answered.\n4. Immediately call Task for `fe`, `be`, or both. Include the symptom, expected behavior, relevant paths, and acceptance criteria. When both are needed and they share a contract, run backend first and pass that contract to the frontend.\n5. Wait for specialists to return. Only then verify claimed files with read-only inspection. Never trust a report alone.\n6. Report a short summary with status `DONE`, `PARTIAL`, or `BLOCKED`: files verified, checks run, unresolved items. Delegation alone is never `DONE`.\n\nHard bans:\n- Do not edit files or implement the fix yourself.\n- Do not bypass `edit: deny` with bash. Never create, delete, or rewrite project files via `cat >`, redirection (`>` / `>>`), `tee`, `rm`, `mkdir`, `cp`, `mv`, `touch`, editors, or scripts that mutate the tree. Use bash only for read-only inspection and checks.\n\nStay inside the original request. Do not expand it into a feature. Work only inside the project directory. Never read, write, or back up files outside it."
+    },
+    "ask": {
+      "description": "Answers questions about the codebase without changing files",
+      "mode": "primary",
+      "temperature": 0.1,
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "lsp": "allow",
+        "bash": "ask",
+    
+        "edit": "deny",
+        "external_directory": "deny",
+        "todowrite": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+    
+        "task": "deny"
+      },
+      "prompt": "{file:./.opencode/rules/cursor-ask-mode.mdc}"
+    }
+  }
+}
